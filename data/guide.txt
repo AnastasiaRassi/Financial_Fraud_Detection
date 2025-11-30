@@ -1,0 +1,3 @@
+Interim data: Produced during processes for temporary use.
+Raw data: Original, untouched.
+Processed data: As the name suggests.

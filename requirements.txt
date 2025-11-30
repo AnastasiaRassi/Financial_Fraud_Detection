@@ -1,0 +1,27 @@
+# Core
+numpy
+pandas
+scipy
+
+# Machine Learning
+scikit-learn
+xgboost
+lightgbm
+
+# Data Visualization
+matplotlib
+seaborn
+plotly
+
+# Utilities
+joblib
+tqdm
+python-dotenv
+
+# Database / API
+sqlalchemy
+pymongo
+requests
+
+# Experiment Tracking
+mlflow
