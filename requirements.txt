@@ -15,6 +15,7 @@ plotly
 
 # Utilities
 joblib
+pytest
 tqdm
 python-dotenv
 

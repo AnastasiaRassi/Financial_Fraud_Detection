@@ -1,0 +1,3 @@
+paths:
+  input_raw_data: "data/raw/raw_fin_data.csv"
+  output_raw_data: "data/raw/fin_data.csv"
