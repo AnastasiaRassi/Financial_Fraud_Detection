@@ -7,6 +7,7 @@ scipy
 scikit-learn
 xgboost
 lightgbm
+flaml
 
 # Data Visualization
 matplotlib
@@ -26,3 +27,4 @@ requests
 
 # Experiment Tracking
 mlflow
+prefect
