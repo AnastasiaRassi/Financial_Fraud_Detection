@@ -3,11 +3,14 @@ numpy
 pandas
 scipy
 
-# Machine Learning
+# Machine Learning / DL
 scikit-learn
 xgboost
 lightgbm
 flaml
+torch
+tensorflow
+imbalanced-learn
 
 # Data Visualization
 matplotlib

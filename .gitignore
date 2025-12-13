@@ -1,2 +1,4 @@
 .env
 .venv
+credit-fraud-dealing-with-imbalanced-datasets.ipynb
+data/raw/raw_fin_data.csv
