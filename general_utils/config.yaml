@@ -1,0 +1,130 @@
+# Configuration file for Fraud Detection ML Pipeline
+
+paths:
+  input_raw_data: "data/raw/creditcard.csv"
+  output_interim_data: "data/interim/interim_data.csv"
+  output_processed_data: "data/processed/train_data.csv"
+  artifacts_dir: "artifacts"
+  logs_dir: "logs"
+
+# Reproducibility
+reproducibility:
+  random_seed: 42
+  numpy_seed: 42
+  python_seed: 42
+  torch_seed: 42
+  cudnn_deterministic: true
+  cudnn_benchmark: false
+
+# Data configuration
+data:
+  target_column: "Class"
+  train_test_split: 0.8
+  validation_split: 0.2  
+  shuffle: true
+  features:
+    - "V1"
+    - "V2"
+    - "V3"
+    - "V4"
+    - "V5"
+    - "V6"
+    - "V7"
+    - "V8"
+    - "V9"
+    - "V10"
+    - "V11"
+    - "V12"
+    - "V13"
+    - "V14"
+    - "V15"
+    - "V16"
+    - "V17"
+    - "V18"
+    - "V19"
+    - "V20"
+    - "V21"
+    - "V22"
+    - "V23"
+    - "V24"
+    - "V25"
+    - "V26"
+    - "V27"
+    - "V28"
+
+# Preprocessing
+preprocessing:
+  fit_scaler: True
+  drop_duplicates: True 
+
+# Model configuration
+model:
+  - name: "KNN"
+    sklearn_class: "KNeighborsClassifier"
+
+  - name: "RF"
+    sklearn_class: "RandomForestClassifier"
+
+  - name: "SVC-Linear"
+    sklearn_class: "LinearSVC"
+
+  - name: "DT"
+    sklearn_class: "DecisionTreeClassifier"
+
+  - name: "Perceptron"
+    sklearn_class: "Perceptron"
+
+  - name: "PAClassifier"
+    sklearn_class: "PassiveAggressiveClassifier"
+
+  - name: "Ada-Real"
+    sklearn_class: "AdaBoostClassifier"
+    algorithm: "SAMME.R"
+
+  - name: "Ada-Disc"
+    sklearn_class: "AdaBoostClassifier"
+    algorithm: "SAMME"
+
+  - name: "GBC"
+    sklearn_class: "GradientBoostingClassifier"
+
+  - name: "LR"
+    sklearn_class: "LogisticRegression"
+
+  - name: "SGD"
+    sklearn_class: "SGDClassifier"
+
+  - name: "Ridge"
+    sklearn_class: "RidgeClassifier"
+
+  - name: "GNB"
+    sklearn_class: "GaussianNB"
+
+  - name: "QuadraticDA"
+    sklearn_class: "QuadraticDiscriminantAnalysis"
+
+  - name: "Dummy"
+    sklearn_class: "DummyClassifier"
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+    - "pr_auc"
+
+# MLflow configuration
+mlflow:
+  tracking_uri: "file:./mlruns"  # Local file-based tracking
+  experiment_name: "financial_fraud_detection"
+  log_artifacts: true
+  log_models: true
+  log_git_hash: true
+
+# Logger configuration
+logger:
+  destination: "logs"
+  level: "INFO"
+  format: "[ %(asctime)s ]  %(name)s.%(funcName)s:%(lineno)d - %(levelname)s - %(message)s"

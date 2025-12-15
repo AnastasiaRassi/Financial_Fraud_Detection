@@ -3,6 +3,7 @@ from datetime import datetime
 from sklearn.metrics import f1_score, classification_report, roc_auc_score, matthews_corrcoef
 import pandas as pd
 
+
 class CustomException(Exception):
     """
     Custom exception handling class
@@ -22,7 +23,9 @@ def load_config():
     """
     loads config.yaml irrespective of current file path
     """
-    with open(r'C:\Users\User\Documents\FRAUD_DETECTION\config.yaml') as f:
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    config_path = os.path.join(project_root, 'config.yaml')
+    with open(config_path, 'r') as f:
         return yaml.safe_load(f)
     
 def setup_logger():
@@ -32,9 +35,12 @@ def setup_logger():
     config = load_config()
 
     log_folder = config["logger"]["destination"]
+    # Get project root directory
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    log_folder = os.path.join(project_root, log_folder)
+    os.makedirs(log_folder, exist_ok=True)
     log_file_name = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
     log_file_path = os.path.join(log_folder, log_file_name)
-    os.makedirs(log_file_path, exist_ok=True)
     # Setup logging
     logging.basicConfig(
         level=logging.INFO,
