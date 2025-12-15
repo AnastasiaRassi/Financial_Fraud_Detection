@@ -36,26 +36,26 @@ The pipeline is inspired by [arxiv:2208.11900](https://arxiv.org/pdf/2208.11900)
 ### Project Structure
 
 FRAUD_DETECTION/
-├── config.yaml # Configuration file
-├── main.py # Main entry point
-├── requirements.txt # Python dependencies
-├── README.md # This file
+├── config.yaml           # Configuration file
+├── main.py               # Main entry point
+├── requirements.txt      # Python dependencies
+├── README.md             
 ├── data/
-│ ├── raw/ # Raw data (provided externally)
-│ ├── interim/ # Intermediate validated data
-│ └── processed/ # Final processed data
+│   ├── raw/              # Raw data (provided externally)
+│   ├── interim/          # Intermediate validated data
+│   └── processed/        # Final processed data
 ├── src/
-│ ├── ingest.py # Training loop + MLflow logging
-│ ├── preprocessor.py # Orchestrates validation + transformation
-│ ├── validator.py # Data validation class
-│ ├── transformer.py # Scaling (Standard/Robust)
-│ ├── model.py # ML models
-│ ├── evaluate.py # Evaluation metrics
-│ ├── training_utils.py # training utility functions
-│ ├── train.py # Training pipeline + MLflow logging
-├── artifacts/ # Saved models, transformers (Such as scalers...)
-├── logs/ # Log files
-└── tests/ # Unit tests
+│   ├── ingest.py         # Training loop + MLflow logging
+│   ├── preprocessor.py   # Orchestrates validation + transformation
+│   ├── validator.py      # Data validation class
+│   ├── transformer.py    # Scaling (Standard/Robust)
+│   ├── model.py          # ML models
+│   ├── evaluate.py       # Evaluation metrics
+│   ├── training_utils.py # Training utility functions
+│   └── train.py          # Training pipeline + MLflow logging
+├── artifacts/            # Saved models, transformers (Such as scalers...)
+├── logs/                 # Log files
+└── tests/                # Unit tests
 
 
 ## Reproducibility Instructions
