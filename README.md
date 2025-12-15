@@ -56,7 +56,7 @@ FRAUD_DETECTION/
 ├── artifacts/            # Saved models, transformers (Such as scalers...)
 ├── logs/                 # Log files
 └── tests/                # Unit tests
-
+```
 
 ## Reproducibility Instructions
 
