@@ -34,7 +34,7 @@ The pipeline is inspired by [arxiv:2208.11900](https://arxiv.org/pdf/2208.11900)
 - Hyperparameters are configurable via `config.yaml`.
 
 ### Project Structure
-
+```text
 FRAUD_DETECTION/
 ├── config.yaml           # Configuration file
 ├── main.py               # Main entry point
