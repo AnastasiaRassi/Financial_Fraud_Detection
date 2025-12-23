@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/9e063d11b7e64d54a9c0de89533fb12a/artifacts
+end_time: 1766493256297
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 9e063d11b7e64d54a9c0de89533fb12a
+run_name: Ada-Disc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766493234995
+status: 3
+tags: []
+user_id: User

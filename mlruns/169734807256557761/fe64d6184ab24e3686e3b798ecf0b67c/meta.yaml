@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/fe64d6184ab24e3686e3b798ecf0b67c/artifacts
+end_time: 1766493220616
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: fe64d6184ab24e3686e3b798ecf0b67c
+run_name: PAClassifier
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766493219869
+status: 3
+tags: []
+user_id: User
