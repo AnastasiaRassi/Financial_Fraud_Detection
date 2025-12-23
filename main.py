@@ -1,18 +1,14 @@
 """
-Main Entry Point
-Paper: https://arxiv.org/pdf/2208.11900
-
 Main script to run the fraud detection ML pipeline.
 """
 import sys
 import argparse
 from pathlib import Path
 
-# Add project root to path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from utils.general_utils import load_config, setup_logger
+from general_utils.general_utils import load_config, setup_logger
 from src.train import run_experiment
 
 
@@ -43,7 +39,6 @@ def main():
     logger = setup_logger()
     logger.info("="*60)
     logger.info("Fraud Detection ML Pipeline")
-    logger.info("Paper: https://arxiv.org/pdf/2208.11900")
     logger.info("="*60)
     
     # Load configuration

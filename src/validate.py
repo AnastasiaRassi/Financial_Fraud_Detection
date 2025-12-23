@@ -59,13 +59,13 @@ class Validator:
                 f"Target column '{self.target_column}' not found in data. "
                 f"Available columns: {list[Any](self.df.columns)}"
             )
-        if self.features not in self.df.columns:
+        missing_features = [col for col in self.features if col not in self.df.columns]
+        if missing_features:
             raise ValueError(
-                f"Features incomplete "
-                f"Available columns: {list[Any](self.df.columns)}"
-                f"Needed columns: {list[Any](self.features)}"
+                f"Features incomplete. Missing columns: {missing_features}. "
+                f"Available columns: {list(self.df.columns)}"
             )
-    
+
     def _validate_nulls(self) -> None:
         """
         Check for null values of an excessive ratio.

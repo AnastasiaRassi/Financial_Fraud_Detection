@@ -1,4 +1,4 @@
-# Configuration file for Fraud Detection ML Pipeline
+# Configuration file 
 
 paths:
   input_raw_data: "data/raw/creditcard.csv"
@@ -7,7 +7,6 @@ paths:
   artifacts_dir: "artifacts"
   logs_dir: "logs"
 
-# Reproducibility
 reproducibility:
   random_seed: 42
   numpy_seed: 42
@@ -16,7 +15,6 @@ reproducibility:
   cudnn_deterministic: true
   cudnn_benchmark: false
 
-# Data configuration
 data:
   target_column: "Class"
   train_test_split: 0.8
@@ -52,12 +50,10 @@ data:
     - "V27"
     - "V28"
 
-# Preprocessing
 preprocessing:
   fit_scaler: True
   drop_duplicates: True 
 
-# Model configuration
 model:
   - name: "KNN"
     sklearn_class: "KNeighborsClassifier"
@@ -106,7 +102,6 @@ model:
   - name: "Dummy"
     sklearn_class: "DummyClassifier"
 
-# Evaluation configuration
 evaluation:
   metrics:
     - "precision"
@@ -115,15 +110,13 @@ evaluation:
     - "roc_auc"
     - "pr_auc"
 
-# MLflow configuration
 mlflow:
-  tracking_uri: "file:./mlruns"  # Local file-based tracking
+  tracking_uri: "file:./mlruns"  
   experiment_name: "financial_fraud_detection"
   log_artifacts: true
   log_models: true
   log_git_hash: true
 
-# Logger configuration
 logger:
   destination: "logs"
   level: "INFO"

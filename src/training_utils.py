@@ -8,6 +8,8 @@ import random
 import os
 from pathlib import Path
 import sys
+from src.ingest import DataIngestion
+from sklearn.model_selection import train_test_split
 
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
@@ -20,26 +22,13 @@ def set_seeds(config: Dict) -> None:
     Args:
         config: Configuration dictionary with reproducibility settings
     """
-    repro_config = config.get('reproducibility', {})
+    reproducibility_config = config.get('reproducibility', {})
     
-    seed = repro_config.get('random_seed', 42)
+    seed = reproducibility_config.get('random_seed', 42)
     np.random.seed(seed)
     random.seed(seed)
-    
-    # PyTorch seeds
-    torch.manual_seed(repro_config.get('torch_seed', seed))
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(repro_config.get('torch_seed', seed))
-        if repro_config.get('cudnn_deterministic', True):
-            torch.backends.cudnn.deterministic = True
-        if repro_config.get('cudnn_benchmark', False):
-            torch.backends.cudnn.benchmark = False
-    
-    # NumPy seed
-    np.random.seed(repro_config.get('numpy_seed', seed))
-    
-    os.environ['PYTHONHASHSEED'] = str(repro_config.get('python_seed', seed))
-
+    np.random.seed(reproducibility_config.get('numpy_seed', seed))
+    os.environ['PYTHONHASHSEED'] = str(reproducibility_config.get('python_seed', seed))     # To ensure no changes in the seed
 
 def load_data(config: Dict) -> pd.DataFrame:
     """
@@ -51,7 +40,6 @@ def load_data(config: Dict) -> pd.DataFrame:
     Returns:
         Loaded DataFrame
     """
-    from src.data_ingestion.ingest import DataIngestion
     
     ingestion = DataIngestion(config)
     return ingestion.load_data()
@@ -72,11 +60,10 @@ def split_data(
         Tuple of (train_df, val_df, test_df)
         
     """
-    from sklearn.model_selection import train_test_split
-    
+    # set configuration
     data_config = config.get('data', {})
     target_column = data_config.get('target_column', 'Class')
-    train_split = data_config.get('train_test_split', 0.8)
+    test_split = data_config.get('train_test_split', 0.8)
     val_split = data_config.get('validation_split', 0.2)
     shuffle = data_config.get('shuffle', True)
     random_seed = config.get('reproducibility', {}).get('random_seed', 42)
@@ -88,7 +75,7 @@ def split_data(
     # Initial train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, 
-        test_size=1 - train_split,
+        test_size= test_split,
         shuffle=shuffle,
         random_state=random_seed,
         stratify=y  # Maintain class distribution

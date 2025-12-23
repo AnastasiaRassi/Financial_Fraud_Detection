@@ -27,23 +27,25 @@ class Transformer:
         self.random_seed = random_seed
         self.scaler = None
         self.is_fitted = False
-        self.skew_threshold = self.config.get('transformer', {}).get('skew_threshold', 0.5)
     
     def fit_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         np.random.seed(self.random_seed)
-        # Decide scaler type per feature
-        skewed_cols = X.select_dtypes(include=np.number).apply(lambda col: col.skew()).abs() > self.skew_threshold
+        # Decide scaler type depending on feature skewness
+        cols = X.columns
+        skewed_cols = (cols.apply(lambda col: col.skew()).abs() > 0.5) | (cols.apply(lambda col: col.skew()).abs() < -0.5)  
         if skewed_cols.any():
             self.scaler = RobustScaler()
         else:
             self.scaler = StandardScaler()
         
-        X_scaled = pd.DataFrame(
-            self.scaler.fit_transform(X),
-            columns=X.columns,
-            index=X.index
-        )
-        self.is_fitted = True
+        if not self.is_fitted:
+            X_scaled = pd.DataFrame(
+                self.scaler.fit_transform(X),
+                columns=X.columns,
+                index=X.index
+            )
+            self.is_fitted = True
+            
         return X_scaled
     
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:

@@ -39,7 +39,7 @@ class DataIngestion:
         # Get input path from config
         input_path = config['paths']['input_raw_data']
         if not os.path.isabs(input_path):
-            input_path = project_root / input_path
+            input_path = project_root / 'FRAUD_DETECTION' /input_path
         self.input_path = str(input_path)
         
         assert self.input_path != '', "Input path cannot be empty"

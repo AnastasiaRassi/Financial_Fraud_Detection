@@ -24,7 +24,7 @@ def load_config():
     loads config.yaml irrespective of current file path
     """
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    config_path = os.path.join(project_root, 'config.yaml')
+    config_path = os.path.join(project_root, 'general_utils/config.yaml')
     with open(config_path, 'r') as f:
         return yaml.safe_load(f)
     

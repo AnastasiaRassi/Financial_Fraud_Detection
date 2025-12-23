@@ -1,94 +1,61 @@
 """
 Evaluation Module
-Paper: https://arxiv.org/pdf/2208.11900
-
-Evaluates model using metrics matching the paper.
-Per project rules: Use the same metrics and evaluation protocol as the paper.
 """
-import torch
+
+from typing import Dict
+
 import numpy as np
-from torch.utils.data import DataLoader
-from typing import Dict, Optional
 from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score, f1_score,
-    roc_auc_score, average_precision_score, confusion_matrix
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    average_precision_score,
+    confusion_matrix,
 )
-import sys
-from pathlib import Path
-
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
-from src.model import FraudDetectionModel
 
 
-def evaluate(
-    model: FraudDetectionModel,
-    dataloader: DataLoader,
-    config: Dict,
-    device: Optional[torch.device] = None
+def evaluate_sklearn(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    y_proba: np.ndarray,
 ) -> Dict[str, float]:
     """
-    Evaluate model on a dataset.
-    
-    Per project rules output expectations.
-    
+    Compute evaluation metrics for a classical sklearn model.
+
     Args:
-        model: Trained model
-        dataloader: DataLoader for evaluation
-        config: Configuration dictionary
-        device: PyTorch device
-        
+        y_true: Ground truth labels (binary 0/1)
+        y_pred: Predicted labels (binary 0/1)
+        y_proba: Predicted probabilities for the positive class
+
     Returns:
-        Dictionary of evaluation metrics
-        
-    NOTE: Metrics should match those reported in the paper.
-    TODO: Verify exact metrics and evaluation protocol from paper.
+        Dictionary of evaluation metrics.
     """
-    device = device or torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model.to(device)
-    model.eval()
-    
-    all_predictions = []
-    all_targets = []
-    all_probs = []
-    
-    with torch.no_grad():
-        for X, y in dataloader:
-            X, y = X.to(device), y.to(device)
-            probs = model.predict_proba(X)
-            
-            # Convert probabilities to predictions (threshold = 0.5)
-            predictions = (probs > 0.5).float()
-            
-            all_predictions.extend(predictions.cpu().numpy())
-            all_targets.extend(y.cpu().numpy())
-            all_probs.extend(probs.cpu().numpy())
-    
-    # Convert to numpy arrays
-    predictions = np.array(all_predictions).flatten()
-    targets = np.array(all_targets).flatten()
-    probs = np.array(all_probs).flatten()
-    
-    # Compute metrics
-    # TODO: Verify which metrics the paper reports
-    metrics = {
-        'accuracy': accuracy_score(targets, predictions),
-        'precision': precision_score(targets, predictions, zero_division=0),
-        'recall': recall_score(targets, predictions, zero_division=0),
-        'f1': f1_score(targets, predictions, zero_division=0),
-        'roc_auc': roc_auc_score(targets, probs) if len(np.unique(targets)) > 1 else 0.0,
-        'pr_auc': average_precision_score(targets, probs) if len(np.unique(targets)) > 1 else 0.0,
+    y_true = y_true.ravel()
+    y_pred = y_pred.ravel()
+    y_proba = y_proba.ravel()
+
+    metrics: Dict[str, float] = {
+        "accuracy": accuracy_score(y_true, y_pred),
+        "precision": precision_score(y_true, y_pred, zero_division=0),
+        "recall": recall_score(y_true, y_pred, zero_division=0),
+        "f1": f1_score(y_true, y_pred, zero_division=0),
+        "roc_auc": roc_auc_score(y_true, y_proba)
+        if len(np.unique(y_true)) > 1
+        else 0.0,
+        "pr_auc": average_precision_score(y_true, y_proba)
+        if len(np.unique(y_true)) > 1
+        else 0.0,
     }
-    
-    # Confusion matrix
-    cm = confusion_matrix(targets, predictions)
+
+    cm = confusion_matrix(y_true, y_pred)
     if cm.size == 4:  # Binary classification
-        metrics['tn'] = int(cm[0, 0])
-        metrics['fp'] = int(cm[0, 1])
-        metrics['fn'] = int(cm[1, 0])
-        metrics['tp'] = int(cm[1, 1])
-    
+        metrics["tn"] = int(cm[0, 0])
+        metrics["fp"] = int(cm[0, 1])
+        metrics["fn"] = int(cm[1, 0])
+        metrics["tp"] = int(cm[1, 1])
+
     return metrics
 
 

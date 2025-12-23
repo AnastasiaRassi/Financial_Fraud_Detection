@@ -1,7 +1,7 @@
 """
-Orchestrates validation and transformation.
+Orchestrates validation and preprocessing.
 The dataset was already subject to a PCA transformation, maintaining the features' predictive value but making 
-the feature labels ambigious, so creative feature engineering is off the table.
+the feature labels ambigious, so creative feature engineering not likely an impactful idea.
 """
 import pandas as pd
 import numpy as np
@@ -12,8 +12,8 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from src.validator import Validator
-from src.transformer import Transformer
+from src.validate import Validator
+from src.transform import Transformer
 from general_utils.general_utils import CustomException
 
 
@@ -22,22 +22,19 @@ class Preprocessor:
     Orchestrates data preprocessing pipeline.
     Handles missing numeric values and chooses scaling based on skewness.
     """
-    def __init__(self, config: Optional[Dict] = None, random_seed: int = 42):
+    def __init__(self, df: pd.DataFrame, config: Optional[Dict] = None, random_seed: int = 42):
         self.config = config or {}
         self.random_seed = random_seed
-        self.validator = Validator(pd.DataFrame(), config)
+        self.df = df.copy()
+        self.validator = Validator(df, config)
         self.transformer = Transformer(config, random_seed=random_seed)
     
-    def preprocess(
-        self, 
-        df: pd.DataFrame, 
-        fit_scaler
-    ) -> Tuple[pd.DataFrame, Transformer]:
+    def preprocess(self, fit_scaler) -> Tuple[pd.DataFrame, Transformer]:
         """
         Preprocess data: validate -> impute -> scale.
         """
         try:
-            validator = Validator(df,  self.config)
+            validator = Validator(self.df, self.config)
             validated_df = validator.validate()
             
             target_column = self.config.get('data', {}).get('target_column', 'Class')
@@ -45,6 +42,9 @@ class Preprocessor:
             y = validated_df[[target_column]]
             
             numeric_cols = X.select_dtypes(include=np.number).columns
+
+            # I have chosen to impute the nulls with the median, as a defense against current or future skew in the 
+            # data's distribution. When it is normally distributed, the median and mean are not too different anyway.
             for col in numeric_cols:
                 if X[col].isnull().any():
                     median = X[col].median()
@@ -52,6 +52,7 @@ class Preprocessor:
 
             fit_scaler =  self.config.get('data', {}).get('fit_scaler', True)
 
+            # we fit only on the training dataset, when fit_scaler = True
             if fit_scaler:
                 X_scaled = self.transformer.fit_transform(X)
             else:
@@ -61,8 +62,8 @@ class Preprocessor:
             preprocessed_df = pd.concat([X_scaled, y], axis=1)
             
             # Verify no dimensions were changed
-            assert preprocessed_df.shape[0] == df.shape[0], "Row count changed during preprocessing"
-            assert preprocessed_df.shape[1] == df.shape[1], "Column count changed during preprocessing"
+            assert preprocessed_df.shape[0] == self.df.shape[0], "Row count changed during preprocessing"
+            assert preprocessed_df.shape[1] == self.df.shape[1], "Column count changed during preprocessing"
             
             return preprocessed_df, self.transformer
         
