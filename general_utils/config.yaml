@@ -75,7 +75,7 @@ model:
 
   - name: "Ada-Real"
     sklearn_class: "AdaBoostClassifier"
-    algorithm: "SAMME.R"
+    algorithm: "SAMME"
 
   - name: "Ada-Disc"
     sklearn_class: "AdaBoostClassifier"

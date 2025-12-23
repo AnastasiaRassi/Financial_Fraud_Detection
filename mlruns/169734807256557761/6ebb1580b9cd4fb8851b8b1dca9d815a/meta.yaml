@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/6ebb1580b9cd4fb8851b8b1dca9d815a/artifacts
+end_time: 1766492229592
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 6ebb1580b9cd4fb8851b8b1dca9d815a
+run_name: SGD
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766492229007
+status: 3
+tags: []
+user_id: User

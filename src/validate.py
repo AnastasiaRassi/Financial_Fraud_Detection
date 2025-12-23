@@ -47,7 +47,7 @@ class Validator:
             self._validate_nulls()
             self._validate_shape()
             self._validate_target()
-            return self.df, self.results
+            return self.df
             
         except Exception as e:
             raise CustomException(e, sys)

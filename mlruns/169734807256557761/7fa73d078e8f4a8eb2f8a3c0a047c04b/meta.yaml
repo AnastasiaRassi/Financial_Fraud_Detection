@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/7fa73d078e8f4a8eb2f8a3c0a047c04b/artifacts
+end_time: 1766492174678
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 7fa73d078e8f4a8eb2f8a3c0a047c04b
+run_name: Ada-Real
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766492165002
+status: 3
+tags: []
+user_id: User

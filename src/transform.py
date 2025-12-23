@@ -29,24 +29,30 @@ class Transformer:
         self.is_fitted = False
     
     def fit_transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        np.random.seed(self.random_seed)
-        # Decide scaler type depending on feature skewness
-        cols = X.columns
-        skewed_cols = (cols.apply(lambda col: col.skew()).abs() > 0.5) | (cols.apply(lambda col: col.skew()).abs() < -0.5)  
-        if skewed_cols.any():
-            self.scaler = RobustScaler()
-        else:
-            self.scaler = StandardScaler()
-        
-        if not self.is_fitted:
-            X_scaled = pd.DataFrame(
-                self.scaler.fit_transform(X),
-                columns=X.columns,
-                index=X.index
-            )
-            self.is_fitted = True
+        try:
+            np.random.seed(self.random_seed)
+            # Decide scaler type depending on feature skewness
+            cols = self.config["data"]["features"]
+            # Compute skewness for each numeric column
+            skewed_cols = X[cols].apply(lambda col: col.skew())
+            # Filter columns with absolute skew > 0.5
+            skewed_cols = skewed_cols[skewed_cols.abs() > 0.5].index.tolist()
+            if skewed_cols:
+                self.scaler = RobustScaler()
+            else:
+                self.scaler = StandardScaler()
             
-        return X_scaled
+            if not self.is_fitted:
+                X_scaled = pd.DataFrame(
+                    self.scaler.fit_transform(X),
+                    columns=X.columns,
+                    index=X.index
+                )
+                self.is_fitted = True
+                
+            return X_scaled
+        except Exception as e:
+            raise CustomException(e, sys)
     
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         if not self.is_fitted:
