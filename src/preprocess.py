@@ -1,8 +1,3 @@
-"""
-Orchestrates validation and preprocessing.
-The dataset was already subject to a PCA transformation, maintaining the features' predictive value but making 
-the feature labels ambigious, so creative feature engineering not likely an impactful idea.
-"""
 import pandas as pd
 import numpy as np
 from typing import Dict, Optional, Tuple
@@ -18,21 +13,14 @@ from general_utils.general_utils import CustomException
 
 
 class Preprocessor:
-    """
-    Orchestrates data preprocessing pipeline.
-    Handles missing numeric values and chooses scaling based on skewness.
-    """
-    def __init__(self, df: pd.DataFrame, config: Optional[Dict] = None, random_seed: int = 42):
+    def __init__(self, df: pd.DataFrame, config, random_seed: int = 42):
         self.config = config or {}
         self.random_seed = random_seed
         self.df = df.copy()
         self.validator = Validator(df, config)
         self.transformer = Transformer(config, random_seed=random_seed)
     
-    def preprocess(self, fit_scaler) -> Tuple[pd.DataFrame, Transformer]:
-        """
-        Preprocess data: validate -> impute -> scale.
-        """
+    def preprocess(self, fit_scaler):
         try:
             validator = Validator(self.df, self.config)
             validated_df = validator.validate()
@@ -58,10 +46,8 @@ class Preprocessor:
             else:
                 X_scaled = self.transformer.transform(X)
             
-            # Combine features with target
             preprocessed_df = pd.concat([X_scaled, y], axis=1)
             
-            # Verify no dimensions were changed
             assert preprocessed_df.shape[0] == self.df.shape[0], "Row count changed during preprocessing"
             assert preprocessed_df.shape[1] == self.df.shape[1], "Column count changed during preprocessing"
             
@@ -72,8 +58,5 @@ class Preprocessor:
 
 
 def preprocess_data(dataset: pd.DataFrame, config: Optional[Dict] = None, random_seed: int = 42) -> Tuple[pd.DataFrame, Transformer]:
-    """
-    Pure function to preprocess data.
-    """
     preprocessor = Preprocessor(config, random_seed=random_seed)
     return preprocessor.preprocess(dataset, fit_scaler=True)

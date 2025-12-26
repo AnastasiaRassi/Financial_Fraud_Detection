@@ -1,5 +1,3 @@
-# Performs schema checks, null checks, shape consistency validation.
-# In case a dataset is totally invalid, we cannot move to the pocessing stage.
 import pandas as pd
 import numpy as np
 from typing import Dict, Optional, Tuple, Any
@@ -13,18 +11,7 @@ from general_utils.general_utils import CustomException
 
 
 class Validator:
-    """
-    validates the input data at the start of the pipeline.
-    """
-    
     def __init__(self, df: pd.DataFrame, config: Optional[Dict] = None):
-        """
-        Initialize Validator.
-        
-        Args:
-            df: DataFrame to validate
-            config: Configuration dictionary. If None, uses minimal validation
-        """
         if not isinstance(df, pd.DataFrame):  
             raise TypeError("Input must be a pandas DataFrame.")
         self.df = df.copy()
@@ -33,15 +20,6 @@ class Validator:
         self.features =  self.config.get('data', {}).get('features', None) if config else None
     
     def validate(self) -> pd.DataFrame:
-        """
-        Perform all validation checks.
-        
-        Returns:
-            Validated DataFrame
-            
-        Raises:
-            CustomException: If validation fails
-        """
         try:
             self._validate_schema()
             self._validate_nulls()
@@ -52,24 +30,14 @@ class Validator:
         except Exception as e:
             raise CustomException(e, sys)
     
-    def _validate_schema(self) -> None:
-        """Validate that required columns exist."""
+    def _validate_schema(self):
         if self.target_column not in self.df.columns:
-            raise ValueError(
-                f"Target column '{self.target_column}' not found in data. "
-                f"Available columns: {list[Any](self.df.columns)}"
-            )
+            raise ValueError(f"Target column '{self.target_column}' not found in data. Available columns: {list(self.df.columns)}")
         missing_features = [col for col in self.features if col not in self.df.columns]
         if missing_features:
-            raise ValueError(
-                f"Features incomplete. Missing columns: {missing_features}. "
-                f"Available columns: {list(self.df.columns)}"
-            )
+            raise ValueError(f"Features incomplete. Missing columns: {missing_features}. Available columns: {list(self.df.columns)}")
 
-    def _validate_nulls(self) -> None:
-        """
-        Check for null values of an excessive ratio.
-        """
+    def _validate_nulls(self):
         null_counts = self.df.isnull().sum()
         nulls_ratio = (null_counts.sum())/len(self.df)
         
@@ -77,41 +45,23 @@ class Validator:
             raise ValueError(f"With {null_counts.sum()} nulls, {nulls_ratio} of the data is null, invalidating it.")
 
     
-    def _validate_shape(self) -> None:
-        """Validate data shape consistency."""
+    def _validate_shape(self):
         if self.df.shape[0] == 0:
             raise ValueError("DataFrame is empty")
         
-    def _validate_target(self) -> None:
-        """Validate target column values."""
+    def _validate_target(self):
         target = self.df[self.target_column]
         
-        # Check that target is binary (0/1)
         unique_values = sorted(target.unique())
         if not (set(unique_values) <= {0, 1}):
-            raise ValueError(
-                f"Target column must contain only 0 and 1. Found values: {unique_values}"
-            )
-        # Check that both classes are present
+            raise ValueError(f"Target column must contain only 0 and 1. Found values: {unique_values}")
+        
         class_counts = target.value_counts()
         if len(class_counts) < 2:
-            raise ValueError(
-                f"Target column must contain both classes (0 and 1). "
-                f"Found only: {class_counts.to_dict()}"
-            )
+            raise ValueError(f"Target column must contain both classes (0 and 1). Found only: {class_counts.to_dict()}")
 
 
 def validate_data(dataset: pd.DataFrame, config: Optional[Dict] = None) -> pd.DataFrame:
-    """
-    Pure function to validate data.
-    
-    Args:
-        dataset: DataFrame to validate
-        config: Configuration dictionary
-        
-    Returns:
-        Validated DataFrame
-    """
     validator = Validator(dataset, config)
     return validator.validate()
 

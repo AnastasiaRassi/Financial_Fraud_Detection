@@ -16,22 +16,7 @@ from general_utils.general_utils import CustomException, load_config
 
 
 class DataIngestion:
-    """
-    Handles loading of raw data.
-    
-    Per project rules:
-    - Data is already PCA-transformed prior to ingestion
-    - Feature names are not semantically meaningful
-    - No preprocessing is performed here
-    """
-    
     def __init__(self, config: Optional[dict] = None):
-        """
-        Initialize DataIngestion with configuration.
-        
-        Args:
-            config: Configuration dictionary. If None, loads from config.yaml
-        """
         if config is None:
             config = load_config()
         self.config = config
@@ -46,15 +31,6 @@ class DataIngestion:
         assert os.path.exists(self.input_path), f"Input file not found: {self.input_path}"
 
     def load_data(self) -> pd.DataFrame:
-        """
-        Load data from CSV file.
-        
-        Returns:
-            DataFrame containing the raw data
-            
-        Raises:
-            CustomException: If loading fails or dataset is too small
-        """
         try:
             df = pd.read_csv(self.input_path)
             assert df.shape[0] >= 10000, "Dataset not large enough (min 10000 rows required)."

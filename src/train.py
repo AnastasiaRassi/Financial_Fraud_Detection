@@ -138,7 +138,7 @@ def run_experiment(config: Dict) -> Dict[str, Any]:
         logger.error(f"Experiment failed: {str(e)}")
         raise CustomException(e, sys)
 
-
+# if I run this file itself, I need the following to run: 
 if __name__ == "__main__":
     cfg = load_config()
     results = run_experiment(cfg)

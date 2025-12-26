@@ -10,11 +10,10 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from src.validator import Validator
+from src.validate import Validator
 
 
 def test_validator_schema_check():
-    """Test that validator checks for target column."""
     df = pd.DataFrame({'feature1': [1, 2, 3], 'feature2': [4, 5, 6]})
     config = {'data': {'target_column': 'Class'}}
     
@@ -24,7 +23,6 @@ def test_validator_schema_check():
 
 
 def test_validator_null_check():
-    """Test that validator fails on null values."""
     df = pd.DataFrame({
         'feature1': [1, 2, None],
         'feature2': [4, 5, 6],
@@ -38,7 +36,6 @@ def test_validator_null_check():
 
 
 def test_validator_valid_data():
-    """Test that validator accepts valid data."""
     df = pd.DataFrame({
         'feature1': [1, 2, 3],
         'feature2': [4, 5, 6],
@@ -54,12 +51,10 @@ def test_validator_valid_data():
 
 
 def test_validator_target_values():
-    """Test that validator checks target values are binary."""
     df = pd.DataFrame({
         'feature1': [1, 2, 3],
         'feature2': [4, 5, 6],
-        'Class': [0, 1, 2]  # Invalid: contains 2
-    })
+        'Class': [0, 1, 2]  })
     config = {'data': {'target_column': 'Class'}}
     
     with pytest.raises(ValueError, match="must contain only 0 and 1"):
