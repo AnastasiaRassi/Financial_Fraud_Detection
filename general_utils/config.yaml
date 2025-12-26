@@ -1,5 +1,3 @@
-# Configuration file 
-
 paths:
   input_raw_data: "data/raw/creditcard.csv"
   output_interim_data: "data/interim/interim_data.csv"

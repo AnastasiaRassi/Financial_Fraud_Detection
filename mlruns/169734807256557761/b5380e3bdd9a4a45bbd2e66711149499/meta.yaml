@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/b5380e3bdd9a4a45bbd2e66711149499/artifacts
+end_time: 1766494944965
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: b5380e3bdd9a4a45bbd2e66711149499
+run_name: GBC
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766494847119
+status: 3
+tags: []
+user_id: User

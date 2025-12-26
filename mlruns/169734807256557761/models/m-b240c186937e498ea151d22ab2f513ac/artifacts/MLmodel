@@ -1,0 +1,22 @@
+artifact_path: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/models/m-b240c186937e498ea151d22ab2f513ac/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.2
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.6.0
+model_id: m-b240c186937e498ea151d22ab2f513ac
+model_size_bytes: 1208
+model_uuid: m-b240c186937e498ea151d22ab2f513ac
+prompts: null
+run_id: 27e9913d2b2a4645901aaca63401fbb6
+utc_time_created: '2025-12-23 13:00:04.260507'

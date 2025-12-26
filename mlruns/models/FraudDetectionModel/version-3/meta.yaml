@@ -1,0 +1,15 @@
+creation_timestamp: 1766494796312
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1766494796312
+model_id: m-85b810382cb84fea80be599e7b1c9786
+name: FraudDetectionModel
+run_id: de3a85d4961d4986b20ff5fddf4b3f86
+run_link: null
+source: models:/m-85b810382cb84fea80be599e7b1c9786
+status: READY
+status_message: null
+storage_location: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/models/m-85b810382cb84fea80be599e7b1c9786/artifacts
+user_id: null
+version: 3

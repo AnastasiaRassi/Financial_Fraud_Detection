@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/c740d9ab096446a7b39b303bf0811168/artifacts
+end_time: 1766493834208
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: c740d9ab096446a7b39b303bf0811168
+run_name: Dummy
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766493833647
+status: 3
+tags: []
+user_id: User

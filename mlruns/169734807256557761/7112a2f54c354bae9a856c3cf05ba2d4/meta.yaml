@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/7112a2f54c354bae9a856c3cf05ba2d4/artifacts
+end_time: 1766493830586
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 7112a2f54c354bae9a856c3cf05ba2d4
+run_name: LR
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766493829872
+status: 3
+tags: []
+user_id: User

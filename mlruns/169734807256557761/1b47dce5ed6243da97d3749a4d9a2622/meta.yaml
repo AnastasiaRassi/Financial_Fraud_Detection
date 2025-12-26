@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/1b47dce5ed6243da97d3749a4d9a2622/artifacts
+end_time: 1766494759947
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 1b47dce5ed6243da97d3749a4d9a2622
+run_name: KNN
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766494669352
+status: 3
+tags: []
+user_id: User

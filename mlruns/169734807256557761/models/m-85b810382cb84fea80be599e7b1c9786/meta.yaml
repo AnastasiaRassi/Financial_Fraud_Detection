@@ -1,0 +1,10 @@
+artifact_location: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/models/m-85b810382cb84fea80be599e7b1c9786/artifacts
+creation_timestamp: 1766494792235
+experiment_id: '169734807256557761'
+last_updated_timestamp: 1766494796210
+model_id: m-85b810382cb84fea80be599e7b1c9786
+model_type: null
+name: model
+source_run_id: de3a85d4961d4986b20ff5fddf4b3f86
+status: 2
+status_message: null

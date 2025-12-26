@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/2c94921dcb3647358ab0cbc86b118329/artifacts
+end_time: 1766493833634
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 2c94921dcb3647358ab0cbc86b118329
+run_name: QuadraticDA
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766493832772
+status: 3
+tags: []
+user_id: User

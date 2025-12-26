@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/9ea80144857a4dc2a74f85a27d85c991/artifacts
+end_time: 1766493831954
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: 9ea80144857a4dc2a74f85a27d85c991
+run_name: Ridge
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766493831304
+status: 3
+tags: []
+user_id: User

@@ -5,9 +5,7 @@ import pandas as pd
 
 
 class CustomException(Exception):
-    """
-    Custom exception handling class
-    """
+    # Custom exception handling class
     def __init__(self, e, sys):
         self.error_message = e
         _,_,exc_tb = sys.exc_info()
@@ -18,29 +16,26 @@ class CustomException(Exception):
         return "Error occured in python script name [{0}] line number [{1}] error message [{2}]".format(
             self.file_name, self.lineno, str(self.error_message))
 
-
+# method for loading configuration
 def load_config():
-    """
-    loads config.yaml irrespective of current file path
-    """
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config_path = os.path.join(project_root, 'general_utils/config.yaml')
     with open(config_path, 'r') as f:
         return yaml.safe_load(f)
     
+# method for logger setup to be used across many files
 def setup_logger():
-    """
-    sets up the logger
-    """
     config = load_config()
 
+    # dir of logs is extracted from configuration 
     log_folder = config["logger"]["destination"]
-    # Get project root directory
+
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     log_folder = os.path.join(project_root, log_folder)
     os.makedirs(log_folder, exist_ok=True)
     log_file_name = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
     log_file_path = os.path.join(log_folder, log_file_name)
+
     # Setup logging
     logging.basicConfig(
         level=logging.INFO,

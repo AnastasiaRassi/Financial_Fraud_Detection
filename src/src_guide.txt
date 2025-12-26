@@ -1,7 +1,0 @@
-Order:
-1. Ingest Data
-2. Validate
-3. Preprocess
-4. Transform
-5. Model
-6. Evaluate

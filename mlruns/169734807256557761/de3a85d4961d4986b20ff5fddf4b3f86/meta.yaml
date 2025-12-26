@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/User/Documents/FRAUD_DETECTION/mlruns/169734807256557761/de3a85d4961d4986b20ff5fddf4b3f86/artifacts
+end_time: 1766494796394
+entry_point_name: ''
+experiment_id: '169734807256557761'
+lifecycle_stage: active
+run_id: de3a85d4961d4986b20ff5fddf4b3f86
+run_name: SVC-Linear
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766494791349
+status: 3
+tags: []
+user_id: User
