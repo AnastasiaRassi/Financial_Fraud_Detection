@@ -1,6 +1,3 @@
-"""
-Main script to run the fraud detection ML pipeline.
-"""
 import sys
 import argparse
 from pathlib import Path
@@ -13,9 +10,6 @@ from src.train import run_experiment
 
 
 def main():
-    """
-    Main function to run the experiment.
-    """
     parser = argparse.ArgumentParser(
         description='Fraud Detection ML Pipeline - Paper Replication'
     )
@@ -35,13 +29,11 @@ def main():
     
     args = parser.parse_args()
     
-    # Setup logger
     logger = setup_logger()
     logger.info("="*60)
     logger.info("Fraud Detection ML Pipeline")
     logger.info("="*60)
     
-    # Load configuration
     try:
         config = load_config()
         logger.info(f"Configuration loaded from {args.config}")
@@ -49,7 +41,6 @@ def main():
         logger.error(f"Failed to load configuration: {str(e)}")
         sys.exit(1)
     
-    # Run experiment
     if args.mode == 'train':
         logger.info("Starting training experiment...")
         try:
@@ -70,7 +61,6 @@ def main():
     
     elif args.mode == 'evaluate':
         logger.info("Evaluation mode not yet implemented")
-        # TODO: Implement evaluation mode
         sys.exit(1)
 
 

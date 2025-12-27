@@ -1,10 +1,10 @@
-
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, RobustScaler
 from typing import Dict, Optional, Tuple
-import joblib, os , sys
+import joblib, os, sys
 from pathlib import Path
+from imblearn.over_sampling import SMOTE
 
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
@@ -17,7 +17,12 @@ class Transformer:
         self.config = config or {}
         self.random_seed = random_seed
         self.scaler = None
+        self.smote = None
         self.is_fitted = False
+        sampling_config = self.config.get("data_pipeline", {}).get("sampling", {})
+        self.use_smote = sampling_config.get("enabled", False)
+        if self.use_smote:
+            self.smote = SMOTE(random_state=self.random_seed)
     
     def fit_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         try:
@@ -28,6 +33,7 @@ class Transformer:
 
             #  columns with |skew| > 0.5 have  skewed data 
             skewed_cols = skewed_cols[skewed_cols.abs() > 0.5].index.tolist()
+            
             if skewed_cols:
                 # robust scaler is 'robust' to outliers, it uses the median not the mean
                 self.scaler = RobustScaler()
@@ -41,10 +47,23 @@ class Transformer:
                     index=X.index
                 )
                 self.is_fitted = True
+            else:
+                X_scaled = pd.DataFrame(
+                    self.scaler.transform(X),
+                    columns=X.columns,
+                    index=X.index
+                )
                 
             return X_scaled
         except Exception as e:
             raise CustomException(e, sys)
+    
+    def apply_smote(self, X: pd.DataFrame, y: pd.Series) -> Tuple[pd.DataFrame, pd.Series]:
+        if not self.use_smote:
+            return X, y
+        X_resampled, y_resampled = self.smote.fit_resample(X, y)
+        X_resampled = pd.DataFrame(X_resampled, columns=X.columns)
+        return X_resampled, pd.Series(y_resampled, name=y.name if hasattr(y, 'name') else None)
     
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         if not self.is_fitted:

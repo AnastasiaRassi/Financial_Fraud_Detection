@@ -1,5 +1,3 @@
-# Helper functions for data loading, evaluation, and reproducibility.
-
 import torch
 import numpy as np
 import pandas as pd
@@ -29,7 +27,6 @@ def load_data(config: Dict) -> pd.DataFrame:
 
 
 def split_data(df: pd.DataFrame, config: Dict):
-    # set configuration
     data_config = config.get('data', {})
     target_column = data_config.get('target_column', 'Class')
     test_split = data_config.get('train_test_split', 0.8)

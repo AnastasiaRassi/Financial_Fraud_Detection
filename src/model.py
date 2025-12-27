@@ -1,10 +1,3 @@
-"""
-Inspired by paper: https://arxiv.org/pdf/2208.11900
-
-Deviation from paper:
-I no longer implement the MLP in PyTorch here.
-Instead, I construct classical ML models """
-
 from typing import Dict, Optional, Any, List
 import importlib
 import sys

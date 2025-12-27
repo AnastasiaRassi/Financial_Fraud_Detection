@@ -38,7 +38,7 @@ class Preprocessor:
                     median = X[col].median()
                     X[col] = X[col].fillna(median)
 
-            fit_scaler =  self.config.get('data', {}).get('fit_scaler', True)
+            fit_scaler = self.config.get('data', {}).get('fit_scaler', True)
 
             # we fit only on the training dataset, when fit_scaler = True
             if fit_scaler:

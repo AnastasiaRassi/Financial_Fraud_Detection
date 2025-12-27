@@ -4,28 +4,29 @@ import numpy as np
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score,
     roc_auc_score, average_precision_score, confusion_matrix)
 
-# method for model evaluation, since we will train many different models & choose the best
-def evaluate_model( y_true: np.ndarray, y_pred: np.ndarray, y_proba: np.ndarray):
+
+def evaluate_model(y_true: np.ndarray, y_pred: np.ndarray, y_proba: np.ndarray):
     y_true = y_true.ravel()
     y_pred = y_pred.ravel()
     y_proba = y_proba.ravel()
 
-    metrics = { "accuracy": accuracy_score(y_true, y_pred),
-                "precision": precision_score(y_true, y_pred, zero_division=0),
-                "recall": recall_score(y_true, y_pred, zero_division=0),
-                "f1": f1_score(y_true, y_pred, zero_division=0),
-                "roc_auc": roc_auc_score(y_true, y_proba),
-                "pr_auc": average_precision_score(y_true, y_proba)}
+    metrics = {
+        "accuracy": accuracy_score(y_true, y_pred),
+        "precision": precision_score(y_true, y_pred, zero_division=0),
+        "recall": recall_score(y_true, y_pred, zero_division=0),
+        "f1": f1_score(y_true, y_pred, zero_division=0),
+        "roc_auc": roc_auc_score(y_true, y_proba),
+        "pr_auc": average_precision_score(y_true, y_proba)
+    }
 
     cm = confusion_matrix(y_true, y_pred)
-    if cm.size == 4: 
+    if cm.size == 4:
         metrics["tn"] = int(cm[0, 0])
         metrics["fp"] = int(cm[0, 1])
         metrics["fn"] = int(cm[1, 0])
         metrics["tp"] = int(cm[1, 1])
 
     return metrics
-
 
 def print_evaluation_metrics(metrics: Dict[str, float]) -> None:
     print("Evaluation metrics:"+"\n")

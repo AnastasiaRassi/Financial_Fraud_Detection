@@ -1,14 +1,10 @@
-"""
-Loads raw data from specified path. Data is assumed to be already PCA-transformed,
-with feature labels unclear for security reasons.
-"""
 import pandas as pd
 import sys
 import os
 from pathlib import Path
 from typing import Optional
 
-# Add project root to path for imports
+#  project root to path for imports
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
@@ -21,7 +17,6 @@ class DataIngestion:
             config = load_config()
         self.config = config
         
-        # Get input path from config
         input_path = config['paths']['input_raw_data']
         if not os.path.isabs(input_path):
             input_path = project_root / 'FRAUD_DETECTION' /input_path
@@ -38,7 +33,7 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e, sys)
 
-# for quick testing
+
 if __name__ == '__main__':
     # Quick test
     obj = DataIngestion()
